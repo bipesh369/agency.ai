@@ -1,16 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
-import { useState } from "react";
 
 const App = () => {
-const [theme, setTheme] = useState("Light")
+  const [theme, setTheme] = useState(
+    localStorage.getItem("theme") || "light"
+  );
 
+  useEffect(() => {
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem("theme", theme);
+  }, [theme]);
 
   return (
-    <div className='dark:bg-black relative'>
-      <Navbar theme={theme} setTheme={setTheme}/>
+    <div className="min-h-screen bg-gray-50 dark:bg-black relative">
+      <Navbar theme={theme} setTheme={setTheme} />
     </div>
-  )
-}
+  );
+};
 
 export default App;
