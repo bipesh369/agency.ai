@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
+import Hero from "./components/Hero";
 
 const App = () => {
   
@@ -20,6 +21,7 @@ const App = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-black relative">
       <Navbar theme={theme} setTheme={setTheme} />
+      <Hero />
     </div>
   );
 };
