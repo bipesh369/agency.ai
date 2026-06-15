@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 
 const App = () => {
+  
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || "light"
   );
+  
 
   useEffect(() => {
     if (theme === "dark") {
@@ -23,3 +25,4 @@ const App = () => {
 };
 
 export default App;
+
