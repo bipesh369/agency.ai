@@ -3,28 +3,41 @@ import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 
 const App = () => {
-  
   const [theme, setTheme] = useState(
     localStorage.getItem("theme") || "light"
   );
-  
 
   useEffect(() => {
+    const root = document.documentElement;
+
     if (theme === "dark") {
-      document.documentElement.classList.add("dark");
+      root.classList.add("dark");
     } else {
-      document.documentElement.classList.remove("dark");
+      root.classList.remove("dark");
     }
+
     localStorage.setItem("theme", theme);
   }, [theme]);
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-black relative">
+    <div
+      className="
+        min-h-screen
+        bg-gray-50
+        dark:bg-black
+        text-gray-900
+        dark:text-white
+        transition-colors
+        duration-300
+      "
+    >
       <Navbar theme={theme} setTheme={setTheme} />
-      <Hero />
+
+      <main>
+        <Hero />
+      </main>
     </div>
   );
 };
 
 export default App;
-

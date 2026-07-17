@@ -1,46 +1,124 @@
-import React, { useState } from 'react'
-import assets from '../assets/assets.js'
+import React, { useState } from "react";
+import assets from "../assets/assets";
 import arrow_icon from "../assets/arrow_icon.svg";
-import ThemeToggleBtn from './ThemeToggleBtn.jsx';
-
+import ThemeToggleBtn from "./ThemeToggleBtn";
 
 const Navbar = ({ theme, setTheme }) => {
-  
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const navLinks = [
+    { name: "Home", href: "#hero" },
+    { name: "Services", href: "#services" },
+    { name: "Our Work", href: "#our-work" },
+    { name: "Contact Us", href: "#contact-us" },
+  ];
 
   return (
-    <div className='flex justify-between items-center px-4 sm:px-12 lg:px-24 xl:px-40 py-4 sticky top-0 z-20 backdrop-blur-xl font-medium bg-white/50 dark:bg-gray-900/70'>
+    <>
+      <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 border-b border-gray-200/20 dark:border-gray-700/20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
-      <img src={theme === "dark" ? assets.logo_dark : assets.logo} className='w-32 sm:w-40' alt='' />
+          {/* Logo */}
+          <img
+            src={theme === "dark" ? assets.logo_dark : assets.logo}
+            alt="Logo"
+            className="w-32 sm:w-36 lg:w-40"
+          />
 
-      <div className={`text-gray-700 dark:text-white sm:text-sm ${!sidebarOpen ? 'max-sm:w-0 overflow-hidden' : 'max-sm:w-60 max-sm:pl-10'} max-sm:fixed top-0 bottom-0 right-0 max-sm:min-h-screen max-sm:h-full max-sm:flex-col max-sm:bg-primary max-sm:text-white max-sm:pt-20 flex sm:items-center gap-5 transition-all`}>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center gap-8 text-gray-700 dark:text-white">
+            {navLinks.map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                className="hover:text-primary transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
 
-        <img src={assets.close_icon} alt="" className='w-5 absolute right-4 top-4 sm:hidden' onClick={()=> setSidebarOpen(false)}/>
+          {/* Right Section */}
+          <div className="flex items-center gap-3">
+            <ThemeToggleBtn theme={theme} setTheme={setTheme} />
 
-        <a onClick={()=> setSidebarOpen(false)} href="#" className='sm:hover:border-b'>Home</a>
-        <a onClick={()=> setSidebarOpen(false)} href="#services" className='sm:hover:border-b'>Services</a>
-        <a onClick={()=> setSidebarOpen(false)} href="#our-work" className='sm:hover:border-b'>Our Work</a>
-        <a onClick={()=> setSidebarOpen(false)} href="#contact-us" className='sm:hover:border-b'>Contact Us</a>
+            {/* Desktop Button */}
+            <a
+              href="#contact-us"
+              className="hidden md:flex items-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full hover:scale-105 transition"
+            >
+              Connect
+              <img src={arrow_icon} alt="" className="w-3" />
+            </a>
+
+            {/* Mobile Menu */}
+            <button
+              onClick={() => setSidebarOpen(true)}
+              className="md:hidden"
+            >
+              <img
+                src={
+                  theme === "dark"
+                    ? assets.menu_icon_dark
+                    : assets.menu_icon
+                }
+                alt="menu"
+                className="w-7"
+              />
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      {/* Backdrop */}
+      {sidebarOpen && (
+        <div
+          onClick={() => setSidebarOpen(false)}
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+        />
+      )}
+
+      {/* Mobile Sidebar */}
+      <div
+        className={`fixed top-0 right-0 h-screen w-72 bg-white dark:bg-gray-900 z-50 shadow-xl transform transition-transform duration-300 md:hidden
+        ${sidebarOpen ? "translate-x-0" : "translate-x-full"}`}
+      >
+        {/* Close Button */}
+        <button
+          onClick={() => setSidebarOpen(false)}
+          className="absolute top-5 right-5"
+        >
+          <img
+            src={assets.close_icon}
+            alt="close"
+            className="w-5"
+          />
+        </button>
+
+        <div className="flex flex-col gap-8 mt-24 px-8 text-lg text-gray-700 dark:text-white">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => setSidebarOpen(false)}
+              className="hover:text-primary transition-colors"
+            >
+              {link.name}
+            </a>
+          ))}
+
+          <a
+            href="#contact-us"
+            onClick={() => setSidebarOpen(false)}
+            className="flex items-center justify-center gap-2 bg-primary text-white py-3 rounded-full mt-4"
+          >
+            Connect
+            <img src={arrow_icon} alt="" className="w-3" />
+          </a>
+        </div>
       </div>
+    </>
+  );
+};
 
-      <div className='flex items-center gap-2 sm:gap-4'>
-
-
-        <ThemeToggleBtn theme={theme} setTheme={setTheme} />
-
-        <img src={theme === 'dark'? assets.menu_icon_dark : assets.menu_icon} alt="" onClick={()=>
-          setSidebarOpen(true)
-        } className='w-8 sm:hidden'/>
-
-        <a href="#contact-us" className='text-sm max-sm:hidden flex items-center gap-2 bg-primary text-white px-6 py-2 rounded-full cursor-pointer hover:scale-105 transition-all'>
-          Connect 
-          <img src={arrow_icon} width={14} alt="" />
-        </a>
-      </div>
-
-    </div>
-  )
-}
-
-export default Navbar
+export default Navbar;
