@@ -4,6 +4,7 @@
 
 body {
   font-family: "Manrope", sans-serif;
+  cursor: none;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
