@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import assets from "../assets/assets";
 import arrow_icon from "../assets/arrow_icon.svg";
 import ThemeToggleBtn from "./ThemeToggleBtn";
+import { motion } from "motion/react"
 
 const Navbar = ({ theme, setTheme }) => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -14,7 +15,11 @@ const Navbar = ({ theme, setTheme }) => {
   ];
 
   return (
-    <>
+   <motion.div
+  initial={{ opacity: 0, y: -50 }}
+  animate={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.5, ease: "easeOut" }}
+>
       <nav className="sticky top-0 z-50 backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 border-b border-gray-200/20 dark:border-gray-700/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
 
@@ -117,7 +122,7 @@ const Navbar = ({ theme, setTheme }) => {
           </a>
         </div>
       </div>
-    </>
+    </motion.div>
   );
 };
 
